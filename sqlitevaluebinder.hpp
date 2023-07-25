@@ -1,7 +1,7 @@
 #ifndef SQLITEVALUEBINDER_H
 #define SQLITEVALUEBINDER_H
 
-#include "sqlitedatabase.h"
+#include "sqlitedatabase.hpp"
 #include <QSqlQuery>
 #include <QDebug>
 

@@ -1,4 +1,4 @@
-#include "sqlitedeleter.h"
+#include "sqlitedeleter.hpp"
 
 #include <QSqlQuery>
 

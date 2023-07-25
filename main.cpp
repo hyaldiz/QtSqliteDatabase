@@ -1,10 +1,10 @@
-#include "sqlitedatabase.h"
-#include "sqlitevaluebinder.h"
-#include "sqlitedataupdateder.h"
-#include "sqlitedeleter.h"
-#include "sqlitequerydata.h"
-#include "sqlitereader.h"
-#include "sqliteprimarykeys.h"
+#include "sqlitedatabase.hpp"
+#include "sqlitevaluebinder.hpp"
+#include "sqlitedataupdateder.hpp"
+#include "sqlitedeleter.hpp"
+#include "sqlitequerydata.hpp"
+#include "sqlitereader.hpp"
+#include "sqliteprimarykeys.hpp"
 
 #include <iostream>
 #include <QDebug>

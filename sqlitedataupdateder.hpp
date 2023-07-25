@@ -1,7 +1,7 @@
 #ifndef SQLITEDATAUPDATEDER_H
 #define SQLITEDATAUPDATEDER_H
 
-#include "sqlitedatabase.h"
+#include "sqlitedatabase.hpp"
 #include <QVariantList>
 
 class SQLiteDataUpdateder

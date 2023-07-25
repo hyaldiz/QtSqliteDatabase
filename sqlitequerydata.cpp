@@ -1,4 +1,4 @@
-#include "sqlitequerydata.h"
+#include "sqlitequerydata.hpp"
 
 #include <QSqlQuery>
 #include <QDebug>

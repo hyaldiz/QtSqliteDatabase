@@ -1,4 +1,4 @@
-#include "sqliteprimarykeys.h"
+#include "sqliteprimarykeys.hpp"
 
 #include <QSqlQuery>
 #include <QDebug>

@@ -2,7 +2,7 @@
 #define SQLITEQUERYDATA_H
 
 #include <QVariant>
-#include "sqlitedatabase.h"
+#include "sqlitedatabase.hpp"
 
 class SQLiteQueryData
 {

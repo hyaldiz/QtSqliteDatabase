@@ -1,4 +1,4 @@
-#include "sqlitereader.h"
+#include "sqlitereader.hpp"
 
 #include <QSqlQuery>
 #include <QDebug>

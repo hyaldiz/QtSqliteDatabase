@@ -1,7 +1,7 @@
 #ifndef SQLITEREADER_H
 #define SQLITEREADER_H
 
-#include "sqlitedatabase.h"
+#include "sqlitedatabase.hpp"
 #include <QVariantList>
 
 class SQLiteReader

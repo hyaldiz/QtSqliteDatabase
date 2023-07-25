@@ -1,7 +1,7 @@
 #ifndef SQLITEDELETER_H
 #define SQLITEDELETER_H
 
-#include "sqlitedatabase.h"
+#include "sqlitedatabase.hpp"
 
 class SQLiteDeleter
 {

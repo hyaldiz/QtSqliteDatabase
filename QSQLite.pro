@@ -18,13 +18,13 @@ SOURCES += \
     sqlitereader.cpp
 
 HEADERS += \
-    sqlitedatabase.h \
-    sqlitedataupdateder.h \
-    sqlitedeleter.h \
-    sqliteprimarykeys.h \
-    sqlitequerydata.h \
-    sqlitereader.h \
-    sqlitevaluebinder.h
+    sqlitedatabase.hpp \
+    sqlitedataupdateder.hpp \
+    sqlitedeleter.hpp \
+    sqliteprimarykeys.hpp \
+    sqlitequerydata.hpp \
+    sqlitereader.hpp \
+    sqlitevaluebinder.hpp
 
 FORMS += \
 
