@@ -1,3 +1,5 @@
+QT += sql
+
 SOURCES += \
     $$PWD/sqlitedatabase.cpp \
     $$PWD/sqlitedataupdateder.cpp \
@@ -7,10 +9,10 @@ SOURCES += \
     $$PWD/sqlitereader.cpp
 
 HEADERS += \
-    $$PWD/sqlitedatabase.h \
-    $$PWD/sqlitedataupdateder.h \
-    $$PWD/sqlitedeleter.h \
-    $$PWD/sqliteprimarykeys.h \
-    $$PWD/sqlitequerydata.h \
-    $$PWD/sqlitereader.h \
-    $$PWD/sqlitevaluebinder.h
+    $$PWD/sqlitedatabase.hpp \
+    $$PWD/sqlitedataupdateder.hpp \
+    $$PWD/sqlitedeleter.hpp \
+    $$PWD/sqliteprimarykeys.hpp \
+    $$PWD/sqlitequerydata.hpp \
+    $$PWD/sqlitereader.hpp \
+    $$PWD/sqlitevaluebinder.hpp
