@@ -8,7 +8,9 @@
 class SQLiteValueBinder
 {
 public:
-    SQLiteValueBinder(SQLiteDataBase& db,QVariantList frame)
+    SQLiteValueBinder(SQLiteDataBase& _db) : db(_db) {};
+
+    void bindValues(QVariantList frame)
     {
         QSqlQuery bindQuery(db);
         if(!bindQuery.prepare(db.values()))
@@ -18,6 +20,9 @@ public:
         if(!bindQuery.exec())
             db.sqlError(bindQuery.lastError(),"SQLiteValueBinder exec");
     }
+
+private:
+    SQLiteDataBase& db;
 };
 
 #endif // SQLITEVALUEBINDER_H

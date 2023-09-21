@@ -52,7 +52,8 @@ void testBindValue()
         int val =(vl.at(0).toInt());
         val+=10;
         vl[0] = val;
-        SQLiteValueBinder vb(x,vl);
+        SQLiteValueBinder vb(x);
+        vb.bindValues(vl);
     }
 }
 
