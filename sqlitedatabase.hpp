@@ -40,6 +40,7 @@ public:
     void sqlError(const QSqlError& error,const QString& sender);
 
     static bool isInteger(const QVariant &variant);
+    static QString removeSpecialCharacters(QString string);
 
 private:
     QString connectionName;

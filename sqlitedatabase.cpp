@@ -45,11 +45,11 @@ void SQLiteDataBase::createTable(const QString &tableName,QList<QPair<QString,QS
             ok = true;
         if(ok)
         {
-            dbvalues += element.first;
-            dbValuesTail += ":" + element.first;
-            dbbindingList.append(":"+element.first);
+            dbvalues += removeSpecialCharacters(element.first);
+            dbValuesTail += ":" + removeSpecialCharacters(element.first);
+            dbbindingList.append(":" + removeSpecialCharacters(element.first));
         }
-        createTable += element.first + " " + element.second;
+        createTable += removeSpecialCharacters(element.first) + " " + element.second;
         if(table.last() != element)
         {
             createTable += ",";
@@ -130,5 +130,10 @@ bool SQLiteDataBase::isInteger(const QVariant &variant)
         case QMetaType::ULongLong:
             return true;
     }
-    return false;
+        return false;
+}
+
+QString SQLiteDataBase::removeSpecialCharacters(QString string)
+{
+    return string.remove(' ').remove('-').remove('/');
 }

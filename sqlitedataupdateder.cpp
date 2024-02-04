@@ -52,7 +52,7 @@ void SQLiteDataUpdateder::updateFrame(int primaryKey, QVariantList frame)
 void SQLiteDataUpdateder::updateData(const QString& parameter,int primaryKey, QVariant data)
 {
     QSqlQuery updateDataQuery(db);
-    QString updateDataCmd = SQLiteDataBase::scmdUpdate + " " + db.tableName() + " " + SQLiteDataBase::scmdSet + " " +parameter + "='" +
+    QString updateDataCmd = SQLiteDataBase::scmdUpdate + " " + db.tableName() + " " + SQLiteDataBase::scmdSet + " " + SQLiteDataBase::removeSpecialCharacters(parameter) + "='" +
             "%1' " + SQLiteDataBase::scmdWhere + " " + db.primaryKeyName() + "=" + QString::number(primaryKey) + """";
 
     if(SQLiteDataBase::isInteger(data))
