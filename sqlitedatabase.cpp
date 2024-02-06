@@ -70,9 +70,6 @@ void SQLiteDataBase::createTable(const QString &tableName,QList<QPair<QString,QS
     createTable.insert(0,SQLiteDataBase::scmdCreateTabNoExist + " " + tableName);
     dbvalues += dbValuesTail;
 
-    qDebug() << createTable;
-    qDebug() << dbvalues;
-
     QSqlQuery createQuery{createTable,database(connectionName)};
     if(!createQuery.exec())                 sqlError(createQuery.lastError(),"createTable exec");
     else if(!createQuery.prepare(dbvalues)) sqlError(createQuery.lastError(),"createTable prepare");
