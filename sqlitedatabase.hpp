@@ -12,6 +12,7 @@ class SQLiteDataBase : public QSqlDatabase
 {
     inline const static QString SQLType = "QSQLITE";
 
+    using DebugCallBack = std::function<void(const QString&)>;
 public:
     static QString scmdCreateTabNoExist;
     static QString scmdInsert;
@@ -42,6 +43,8 @@ public:
     static bool isInteger(const QVariant &variant);
     static QString removeSpecialCharacters(QString string);
 
+    void setDebugCallBack(DebugCallBack debugCallBack);
+
 private:
     QString connectionName;
     QString dbtableName;
@@ -52,6 +55,8 @@ private:
     int dbprimaryKeyIndex;
 
     QList<QPair<QString,QString>> dbPartTable;
+
+    DebugCallBack _debugCallBack = nullptr;
 };
 
 #endif // SQLITEDATABASE_H

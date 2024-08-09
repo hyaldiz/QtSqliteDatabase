@@ -9,7 +9,7 @@ SQLiteDataUpdateder::SQLiteDataUpdateder(SQLiteDataBase& _db)
 {
 }
 
-void SQLiteDataUpdateder::updateFrame(int primaryKey, QVariantList frame)
+void SQLiteDataUpdateder::updateFrame(QVariant primaryKey, QVariantList frame)
 {
     QSqlQuery updateQuery(db);
     QString update = SQLiteDataBase::scmdUpdate + " " + db.tableName() + " " + SQLiteDataBase::scmdSet + " ";
@@ -20,48 +20,65 @@ void SQLiteDataUpdateder::updateFrame(int primaryKey, QVariantList frame)
         auto value = element;
         value = value.remove(":");
 
-        qDebug() << value;
-
-        switch (static_cast<int>(frame.at(index).type()))
+        switch (static_cast<int>(frame.at(index).userType()))
         {
-        case QVariant::Type::Int:
+        case QMetaType::Type::Int:
             update += value + "='" + QString::number(frame.at(index).toInt()) + "'";
             break;
-        case QVariant::Type::Double:
+        case QMetaType::Type::Double:
             update += value + "='" + QString::number(frame.at(index).toDouble()) + "'";
             break;
-        case QVariant::Type::String:
+        case QMetaType::Type::QString:
             update += value + "='" + frame.at(index).toString() + "'";
             break;
-        case QVariant::Type::Bool:
+        case QMetaType::Type::Bool:
             update += value + "='" + QString::number(frame.at(index).toBool()) + "'";
             break;
         }
-        qDebug() << update;
 
-        if(element != db.bindingList().last())
+        if(element != db.bindingList().at(db.bindingList().size() - 1))
             update += ",";
         index++;
     }
-    update +=  " " + SQLiteDataBase::scmdWhere + " " + db.primaryKeyName() + "=" + QString::number(primaryKey) + """";
 
-    if(!updateQuery.prepare(update))    db.sqlError(updateQuery.lastError(),"updateFrame prepare");
-    if(!updateQuery.exec())             db.sqlError(updateQuery.lastError(),"updateFrame exec");
+    QString valueStr = "";
+
+    if(SQLiteDataBase::isInteger(primaryKey))
+        valueStr = QString::number(primaryKey.toInt());
+    else
+        valueStr = primaryKey.toString();
+
+    update +=  " " + SQLiteDataBase::scmdWhere + " " + db.primaryKeyName() + "=" + valueStr + """";
+
+    if(!updateQuery.prepare(update))
+        db.sqlError(updateQuery.lastError(),"updateFrame prepare");
+    if(!updateQuery.exec())
+        db.sqlError(updateQuery.lastError(),"updateFrame exec");
 }
 
-void SQLiteDataUpdateder::updateData(const QString& parameter,int primaryKey, QVariant data)
+void SQLiteDataUpdateder::updateData(const QString& parameter,QVariant primaryKey, QVariant data)
 {
     QSqlQuery updateDataQuery(db);
+
+    QString valueStr = "";
+
+    if(SQLiteDataBase::isInteger(primaryKey))
+        valueStr = QString::number(primaryKey.toInt());
+    else
+        valueStr = primaryKey.toString();
+
     QString updateDataCmd = SQLiteDataBase::scmdUpdate + " " + db.tableName() + " " + SQLiteDataBase::scmdSet + " " + SQLiteDataBase::removeSpecialCharacters(parameter) + "='" +
-            "%1' " + SQLiteDataBase::scmdWhere + " " + db.primaryKeyName() + "=" + QString::number(primaryKey) + """";
+            "%1' " + SQLiteDataBase::scmdWhere + " " + db.primaryKeyName() + "=" + valueStr + """";
 
     if(SQLiteDataBase::isInteger(data))
         updateDataCmd = updateDataCmd.arg(QString::number(data.toLongLong()));
-    else if(data.type() == QVariant::Type::Double)
+    else if(data.userType() == QMetaType::Type::Double)
         updateDataCmd = updateDataCmd.arg(QString::number(data.toDouble()));
-    else if(data.type() == QVariant::Type::String)
+    else if(data.userType() == QMetaType::Type::QString)
         updateDataCmd = updateDataCmd.arg(data.toString());
 
-    if(!updateDataQuery.prepare(updateDataCmd))     db.sqlError(updateDataQuery.lastError(),"updateData prepare");
-    if(!updateDataQuery.exec())                     db.sqlError(updateDataQuery.lastError(),"updateData exec");
+    if(!updateDataQuery.prepare(updateDataCmd))
+        db.sqlError(updateDataQuery.lastError(),"updateData prepare");
+    if(!updateDataQuery.exec())
+        db.sqlError(updateDataQuery.lastError(),"updateData exec");
 }

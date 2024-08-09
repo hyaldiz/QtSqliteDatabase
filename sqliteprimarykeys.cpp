@@ -8,13 +8,20 @@ SQLitePrimaryKeys::SQLitePrimaryKeys(SQLiteDataBase& _db)
 {
 }
 
-bool SQLitePrimaryKeys::isExist(int primaryKey)const
+bool SQLitePrimaryKeys::isExist(QVariant primaryKey)const
 {
     QSqlQuery existIdQuery(db);
+    QString valueStr = "";
+
+    if(SQLiteDataBase::isInteger(primaryKey))
+        valueStr = QString::number(primaryKey.toInt());
+    else
+        valueStr = primaryKey.toString();
+
     QString existIdCmd = SQLiteDataBase::scmdSelect + " " + SQLiteDataBase::scmdAll + " " + SQLiteDataBase::scmdFrom + " " +
             db.tableName() + " " + SQLiteDataBase::scmdWhere + " " + SQLiteDataBase::scmdExists + " " +
             "(" + SQLiteDataBase::scmdSelect + " "  + SQLiteDataBase::scmdAll + " " + SQLiteDataBase::scmdFrom + " " +
-            db.tableName() + " " + SQLiteDataBase::scmdWhere + " " + db.primaryKeyName() + "=" + QString::number(primaryKey) +");";
+            db.tableName() + " " + SQLiteDataBase::scmdWhere + " " + db.primaryKeyName() + "=" + valueStr +");";
 
     if(!existIdQuery.prepare(existIdCmd))   db.sqlError(existIdQuery.lastError(),"isExist prepare");
     if(!existIdQuery.exec())                db.sqlError(existIdQuery.lastError(),"isExist exec");

@@ -8,7 +8,7 @@ class SQLitePrimaryKeys
 public:
     SQLitePrimaryKeys(SQLiteDataBase& _db);
 
-    bool isExist(int primaryKey)const;
+    bool isExist(QVariant primaryKey)const;
     QVector<QVariant> existIDs()const;
 
 private:

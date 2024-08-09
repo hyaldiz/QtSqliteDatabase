@@ -9,8 +9,8 @@ class SQLiteDataUpdateder
 public:
     SQLiteDataUpdateder(SQLiteDataBase& _db);
 
-    void updateFrame(int primaryKey,QVariantList frame);
-    void updateData(const QString& parameter,int primaryKey,QVariant data);
+    void updateFrame(QVariant primaryKey,QVariantList frame);
+    void updateData(const QString& parameter,QVariant primaryKey,QVariant data);
 
 private:
     SQLiteDataBase& db;

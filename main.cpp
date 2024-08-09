@@ -9,6 +9,7 @@
 #include <iostream>
 #include <QDebug>
 #include <QDialog>
+#include <QApplication>
 
 void testCreateDataBase();
 void testBindValue();
@@ -23,9 +24,32 @@ void testReadAll();
 
 SQLiteDataBase x("sqliteExample","huseyinYALDIZ");
 
+void errorCallBack(const QString& error) {
+    qDebug() << "[CALLBACK]" << error;
+}
+
 int main(int argc, char *argv[])
 {
-    return EXIT_SUCCESS;
+    QApplication a(argc,argv);
+
+    x.setDebugCallBack(errorCallBack);
+    x.sqlError(QSqlError("Dummy Error"),"Me");
+
+    testCreateDataBase();
+
+    testBindValue();
+
+    testIsExistID();
+
+    //testIsExistsIDs();
+
+    testUpdateFrame();
+
+    testUpdateData();
+
+
+
+    return a.exec();
 }
 
 void testCreateDataBase()
@@ -83,6 +107,7 @@ void testDeleteAll()
 void testIsExistID()
 {
     SQLitePrimaryKeys pk(x);
+    qDebug() << pk.isExist(1);
     qDebug() << pk.isExist(430);
     qDebug() << pk.isExist(999);
 }
@@ -104,9 +129,9 @@ void testReadAll()
     {
         if(SQLiteDataBase::isInteger(element))
             qDebug() << element.toInt();
-        if(element.type() == QVariant::Type::Double)
+        if(element.userType() == QMetaType::Type::Double)
             qDebug() << element.toDouble();
-        if(element.type() == QVariant::Type::String)
+        if(element.userType() == QMetaType::Type::QString)
             qDebug() << element.toString();
     }
 }
