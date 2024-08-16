@@ -9,7 +9,7 @@ class SQLiteReader
 public:
     SQLiteReader(SQLiteDataBase& _db);
 
-    QVariantList readAll(int primaryKey);
+    QVariantList readAll(QVariant primaryKey);
 
 private:
     SQLiteDataBase& db;

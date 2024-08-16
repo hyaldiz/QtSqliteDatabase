@@ -8,7 +8,7 @@ class SQLiteDeleter
 public:
     SQLiteDeleter(SQLiteDataBase& _db);
 
-    void deleteFrame(int primaryKey);
+    void deleteFrame(QVariant primaryKey);
     void deleteAll();
 
 private:

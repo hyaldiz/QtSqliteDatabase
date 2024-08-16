@@ -2,17 +2,18 @@
 #include <QSqlQuery>
 #include <QDebug>
 
-QString SQLiteDataBase::scmdCreateTabNoExist{"CREATE TABLE IF NOT EXISTS"};
-QString SQLiteDataBase::scmdInsert{"INSERT INTO"};
-QString SQLiteDataBase::scmdUpdate{"UPDATE"};
-QString SQLiteDataBase::scmdSet{"SET"};
-QString SQLiteDataBase::scmdValues{"VALUES"};
-QString SQLiteDataBase::scmdWhere{"WHERE"};
-QString SQLiteDataBase::scmdDelete{"DELETE"};
-QString SQLiteDataBase::scmdSelect{"SELECT"};
-QString SQLiteDataBase::scmdFrom{"FROM"};
-QString SQLiteDataBase::scmdAll{"*"};
-QString SQLiteDataBase::scmdExists{"EXISTS"};
+QString SQLiteDataBase::scmdCreateTabNoExist    {"CREATE TABLE IF NOT EXISTS"};
+QString SQLiteDataBase::scmdInsert              {"INSERT INTO"};
+QString SQLiteDataBase::scmdUpdate              {"UPDATE"};
+QString SQLiteDataBase::scmdSet                 {"SET"};
+QString SQLiteDataBase::scmdValues              {"VALUES"};
+QString SQLiteDataBase::scmdWhere               {"WHERE"};
+QString SQLiteDataBase::scmdDelete              {"DELETE"};
+QString SQLiteDataBase::scmdSelect              {"SELECT"};
+QString SQLiteDataBase::scmdFrom                {"FROM"};
+QString SQLiteDataBase::scmdAll                 {"*"};
+QString SQLiteDataBase::scmdExists              {"EXISTS"};
+QString SQLiteDataBase::scmdIsNotNull           {"IS NOT NULL"};
 
 SQLiteDataBase::SQLiteDataBase(const QString dbName,const QString& _connectionName) : QSqlDatabase(addDatabase(SQLType,_connectionName))
   ,connectionName(_connectionName)
@@ -35,7 +36,6 @@ void SQLiteDataBase::createTable(const QString &tableName,QList<QPair<QString,QS
     QString dbValuesTail = " " + scmdValues + "(";
     dbvalues += SQLiteDataBase::scmdInsert + " " + tableName + "(";
 
-    qsizetype index = 0;
     foreach (auto& element,table) {
         bool ok = true;
         if(element.second.indexOf("AUTOINCREMENT") != -1)
@@ -62,9 +62,10 @@ void SQLiteDataBase::createTable(const QString &tableName,QList<QPair<QString,QS
             dbValuesTail += ")";
             dbvalues += ")";
         }
-        index++;
     }
+
     createTable.insert(0,SQLiteDataBase::scmdCreateTabNoExist + " " + tableName);
+
     dbvalues += dbValuesTail;
 
     QSqlQuery createQuery{createTable,database(connectionName)};

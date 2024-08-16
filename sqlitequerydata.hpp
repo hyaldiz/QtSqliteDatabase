@@ -9,7 +9,7 @@ class SQLiteQueryData
 public:
     SQLiteQueryData(SQLiteDataBase& _db);
 
-    QVariant queryData(const QString& parameter,int primaryKey);
+    QVariant queryData(const QString& parameter,QVariant primaryKey);
 
 private:
     SQLiteDataBase& db;

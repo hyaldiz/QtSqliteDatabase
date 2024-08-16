@@ -25,6 +25,7 @@ public:
     static QString scmdFrom;
     static QString scmdAll;
     static QString scmdExists;
+    static QString scmdIsNotNull;
 
     SQLiteDataBase(const QString dbName,const QString& _connectionName);
     virtual ~SQLiteDataBase();

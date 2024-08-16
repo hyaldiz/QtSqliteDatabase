@@ -37,26 +37,17 @@ int main(int argc, char *argv[])
 
     testCreateDataBase();
 
-    testBindValue();
-
-    testIsExistID();
-
-    //testIsExistsIDs();
-
-    testUpdateFrame();
-
-    testUpdateData();
-
-
+    testDeleteAll();
 
     return a.exec();
 }
 
 void testCreateDataBase()
 {
+    //passed
     QList<QPair<QString,QString>> table
     {
-        {"ID","INTEGER PRIMARY KEY AUTOINCREMENT"},
+        {"ID","TEXT PRIMARY KEY"},
         {"droneID","INTEGER"},   /*"INTEGER PRIMARY KEY UNIQUE"*/   /*"INTEGER AUTOINCREMENT"*/
         {"pilotID","INTEGER"},
         {"startPosition","INTEGER"},
@@ -70,33 +61,44 @@ void testCreateDataBase()
 
 void testBindValue()
 {
-    QVariantList vl{{400},{1},{2},{3},{4},{5},{"Update Test!"}};
-    for(int i=0;i<10;i++)
-    {
-        int val =(vl.at(0).toInt());
-        val+=10;
-        vl[0] = val;
-        SQLiteValueBinder vb(x);
-        vb.bindValues(vl);
-    }
+    //DONE
+    QVariantList vl1{{"Veli"},{1},{2},{3},{4},{5},{"Update Test!"}};
+    QVariantList vl2{{"Huseyin"},{1},{2},{3},{4},{5},{"Update Test!"}};
+    QVariantList vl3{{"Yakup"},{1},{2},{3},{4},{5},{"Update Test!"}};
+
+    SQLiteValueBinder vb(x);
+    vb.bindValues(vl1);
+    vb.bindValues(vl2);
+    vb.bindValues(vl3);
+
+    //    for(int i=0;i<10;i++)
+//    {
+//        int val =(vl.at(0).toInt());
+//        val+=10;
+//        vl[0] = val;
+//        SQLiteValueBinder vb(x);
+//        vb.bindValues(vl);
+//    }
 }
 
 void testUpdateFrame()
 {
-    QVariantList ut{{300},{5.8},{10.1234},{7},{8},{9},{"Update Test! hahahah"}};
-    SQLiteDataUpdateder(x).updateFrame(420,ut);
+    //DONE
+    QVariantList ut{"Tunahan",10,{5.8},{10.1234},{7},{8},{9},{"Update Test! hahahah"}};
+    SQLiteDataUpdateder(x).updateFrame("Veli",ut);
 }
 
 void testUpdateData()
 {
+    //DONE
     SQLiteDataUpdateder sdu(x);
-    sdu.updateData("pilotID",641,1998);
-    sdu.updateData("information",642,"updateSingle data Test xxx!");
+    sdu.updateData("information","Huseyin","updateSingle data Test xxx!");
 }
 
 void testDeleteFrame()
 {
-    SQLiteDeleter(x).deleteFrame(410);
+    //DONE
+    SQLiteDeleter(x).deleteFrame("Huseyin");
 }
 
 void testDeleteAll()
@@ -106,26 +108,30 @@ void testDeleteAll()
 
 void testIsExistID()
 {
+    //DONE
     SQLitePrimaryKeys pk(x);
-    qDebug() << pk.isExist(1);
-    qDebug() << pk.isExist(430);
-    qDebug() << pk.isExist(999);
+    qDebug() << pk.isExist("Huseyin");
+    qDebug() << pk.isExist("Uygar");
+    qDebug() << pk.isExist("Eylül");
 }
 
 void testIsExistsIDs()
 {
+    //DONE
     foreach(auto& id,SQLitePrimaryKeys(x).existIDs())
-        qDebug() << id.toInt();
+        qDebug() << id.toString();
 }
 
 void testQueryData()
 {
-    qDebug() << SQLiteQueryData(x).queryData("information",440).toString();
+    //DONE
+    qDebug() << SQLiteQueryData(x).queryData("stopPosition","Huseyin").toString();
 }
 
 void testReadAll()
 {
-    foreach (auto element,SQLiteReader(x).readAll(440))
+    //DONE
+    foreach (auto element,SQLiteReader(x).readAll("Huseyin"))
     {
         if(SQLiteDataBase::isInteger(element))
             qDebug() << element.toInt();

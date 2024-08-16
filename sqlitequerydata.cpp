@@ -9,14 +9,30 @@ SQLiteQueryData::SQLiteQueryData(SQLiteDataBase& _db)
 
 }
 
-QVariant SQLiteQueryData::queryData(const QString &parameter, int primaryKey)
+QVariant SQLiteQueryData::queryData(const QString &parameter, QVariant primaryKey)
 {
-    QSqlQuery dataQuery(db);
-    QString queryDataCmd = SQLiteDataBase::scmdSelect + " " + SQLiteDataBase::removeSpecialCharacters(parameter) + " " + SQLiteDataBase::scmdFrom + " " +
-            db.tableName() + " " + SQLiteDataBase::scmdWhere + " " + db.primaryKeyName() + "='" + QString::number(primaryKey) + "'";
+    QString valueStr = "";
 
-    if(!dataQuery.exec(queryDataCmd))   db.sqlError(dataQuery.lastError(),"queryData exec");
+    if(SQLiteDataBase::isInteger(primaryKey))
+        valueStr = QString::number(primaryKey.toInt());
+    else
+        valueStr = primaryKey.toString();
+
+    QSqlQuery dataQuery(db);
+    QString queryDataCmd =
+        SQLiteDataBase::scmdSelect                          + " " +
+        SQLiteDataBase::removeSpecialCharacters(parameter)  + " " +
+        SQLiteDataBase::scmdFrom                            + " " +
+        db.tableName()                                      + " " +
+        SQLiteDataBase::scmdWhere                           + " " +
+        db.primaryKeyName()                                 + "='" +
+        valueStr                                            + "'";
+
+    if(!dataQuery.exec(queryDataCmd))
+        db.sqlError(dataQuery.lastError(),"queryData exec");
+
     while(dataQuery.next())
         return dataQuery.value(0);
+
     return QVariant();
 }
