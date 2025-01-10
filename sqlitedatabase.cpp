@@ -46,8 +46,9 @@ void SQLiteDataBase::createTable(const QString &tableName,QList<QPair<QString,QS
         if(ok) {
             dbvalues += removeSpecialCharacters(element.first);
             dbValuesTail += ":" + removeSpecialCharacters(element.first);
-            dbbindingList.append(":" + removeSpecialCharacters(element.first));
         }
+
+        dbbindingList.append(":" + removeSpecialCharacters(element.first));
 
         createTable += removeSpecialCharacters(element.first) + " " + element.second;
         if(table.last() != element) {
